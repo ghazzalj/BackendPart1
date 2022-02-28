@@ -43,11 +43,12 @@ namespace WebApplication2.Controllers
         //Doctor information by ID
         //use find because we are returning 1 doctor
         [HttpGet("{id}")]
-        public DoctorSlotsResponse GetDoctorByID(string id)
+        public DoctorInfoResponse GetDoctorByID(string id)
         { /////////////////////// make a new response model?
 
-            DoctorSlotsResponse resp = new DoctorSlotsResponse();
+            DoctorInfoResponse resp = new DoctorInfoResponse();
             resp.DoctorId = id;
+            resp.Name = context.Users.Where(d => d.Id.Equals(id)).Select(x => x.UserName).Single();
             // resp.Slots = context.Appointments.Where(d => d.Id.Equals(id)).ToList();
             return resp;
 

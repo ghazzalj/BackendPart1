@@ -12,7 +12,7 @@ namespace WebApplication2.Models
         public DateTime EndTime { get; set; }
         public string DoctorID { get; set; }
         public string PatientID { get; set; }
-        public string Status { get; set; }
+        public string Status = "Pending";
 
 
 

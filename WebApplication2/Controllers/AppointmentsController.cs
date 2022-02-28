@@ -25,7 +25,6 @@ namespace WebApplication2.Controllers
         }
 
         //Book an appointment 
-
         [Authorize(Roles = UserRoles.Patient)]
         [HttpPost]
         public async Task<Appointment> BookSlot([FromBody] SlotRequest newSlot) {
@@ -33,13 +32,15 @@ namespace WebApplication2.Controllers
             Guid idg = Guid.NewGuid();
             var records = (newSlot).MapProperties<Appointment>();
             records.Id = idg.ToString();
+          //  records.Status = "Pending";
             context.Appointment.Add(records);
             await context.SaveChangesAsync();
             return records;
         }
-        
-        
-       //Cancel an appoinment 
+
+
+        //Cancel an appoinment 
+       
         [HttpPatch("cancel/{id}")]
         public async Task CancelSlot(string id)
         {
@@ -99,7 +100,7 @@ namespace WebApplication2.Controllers
         public PatientResponse ViewHistory(string id)
         {
             // get all the patient appointments 
-            List<Appointment> patientSlots = context.Appointment.Where(d => d.PatientID.Equals(id)).Where(d => d.Status != "Cancelled").ToList();
+            List<Appointment> patientSlots = context.Appointment.Where(d => d.PatientID.Equals(id)).ToList();
             PatientResponse response = new PatientResponse();
             response.Id = id;
             response.History = patientSlots;
